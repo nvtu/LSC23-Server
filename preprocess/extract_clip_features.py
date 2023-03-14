@@ -10,7 +10,7 @@ import os
 import glob
 
 
-BATCH_INDEX_FOR_SAVING = 500
+BATCH_INDEX_FOR_SAVING = 1
 DEFAULT_DATASET_NAME = 'lsc23'
 DEFAULT_DEVICE = 'cuda'
 DEFAULT_MODEL_NAME = 'ViT-L/14'
@@ -102,11 +102,11 @@ def post_processing(features_folder_path: str, dataset_name: str):
 
     for file in glob.glob(f'{features_folder_path}/{dataset_name}_features_*.pt'):
         corresponding_indices_file = file.replace('features', 'indices')
-        features.append(torch.load(file))
-        feature_indices.append(torch.load(corresponding_indices_file))
+        feats = torch.load(file)
+        features.append(feats)
+        feature_indices += torch.load(corresponding_indices_file)
     
     features = torch.cat(features, dim=0)
-    feature_indices = torch.cat(feature_indices, dim=0)
 
     # Save the final features and indices
     model_name = DEFAULT_MODEL_NAME.replace('/', '-')
@@ -163,4 +163,6 @@ if __name__ == '__main__':
     create_folder(args.output_folder_path)
     
     run(args)
+
+    print('Post-processing...')
     post_processing(args.output_folder_path, args.dataset_name)

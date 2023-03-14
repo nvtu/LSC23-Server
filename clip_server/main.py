@@ -23,7 +23,7 @@ async def encode_text(request: EncodeTextRequestSchema):
     print('/encode-text', text_query)
 
     # Encode text query
-    features = model.encode_text(text_query).cpu().numpy().tolist()
+    features = model.encode_text(text_query).squeeze(0).tolist()
     response = {
         'embedding': features
     }

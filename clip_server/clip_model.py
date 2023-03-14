@@ -1,6 +1,6 @@
 import torch
+from torch.nn.functional import normalize
 import clip
-from sklearn.preprocessing import normalize
 import numpy as np
 
 
@@ -18,9 +18,7 @@ class CLIP:
         """
         Normalizes a tensor.
         """
-        normed_feature = torch.Tensor(
-                normalize(feature.detach().cpu().reshape(1, -1)).flatten().tolist()
-            )
+        normed_feature = normalize(feature, p=2, dim=1)
         return normed_feature
 
     
