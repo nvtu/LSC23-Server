@@ -10,11 +10,11 @@ import os
 import glob
 
 
-BATCH_INDEX_FOR_SAVING = 1
+BATCH_INDEX_FOR_SAVING = 100
 DEFAULT_DATASET_NAME = 'lsc23'
 DEFAULT_DEVICE = 'cuda'
 DEFAULT_MODEL_NAME = 'ViT-L/14'
-DEFAULT_BATCH_SIZE = 512
+DEFAULT_BATCH_SIZE = 1024
 DEFAULT_START_INDEX = 0
 
 class ImageDataset(Dataset):
@@ -110,10 +110,10 @@ def post_processing(features_folder_path: str, dataset_name: str):
 
     # Save the final features and indices
     model_name = DEFAULT_MODEL_NAME.replace('/', '-')
-    feature_output_path = os.path.join(features_folder_path, f'{dataset_name}_{model_name}_embeddings.pt')
+    feature_output_path = os.path.join(features_folder_path, f'{dataset_name}_{model_name}_embeddings.pt') # lsc23_ViT-L-14_embeddings.pt
     torch.save(features, feature_output_path)
 
-    feature_indices_path = os.path.join(features_folder_path, f'{dataset_name}_{model_name}_indices.pt')
+    feature_indices_path = os.path.join(features_folder_path, f'{dataset_name}_{model_name}_indices.pt') # lsc23_ViT-L-14_indices.pt
     torch.save(feature_indices, feature_indices_path)
 
 
