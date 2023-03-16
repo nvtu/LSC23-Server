@@ -6,6 +6,7 @@ from pymilvus import Collection
 class Settings(BaseSettings):
     # App name is used in the OpenAPI docs
     app_name: str 
+    root_path: str
     embedding_server_url: str
     milvus_embedding_search_limit: int
     milvus_collection_name: str

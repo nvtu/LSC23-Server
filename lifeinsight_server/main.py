@@ -6,9 +6,9 @@ from api.api_v1 import api as api_v1_router
 
 config = get_settings()
 app = FastAPI(name = config.app_name,
-    docs_url='/lsc/docs',
-    redoc_url='/lsc/redoc',
-    openapi_url='/lsc/openapi.json',
+    docs_url = f'{config.root_path}/docs',
+    redoc_url = f'{config.root_path}/redoc',
+    openapi_url = f'{config.root_path}/openapi.json',
 )
 
 allowed_origins = ['*']
@@ -23,9 +23,9 @@ app.add_middleware(
     allow_headers = allowed_headers,
 )
 
-app.include_router(api_v1_router.router, prefix='/api/v1')
+app.include_router(api_v1_router.router, prefix=f'{config.root_path}/api/v1')
 
-@app.get("/")
+@app.get(f"{config.root_path}")
 def hello():
     return {"message": "Hello World"}
 
